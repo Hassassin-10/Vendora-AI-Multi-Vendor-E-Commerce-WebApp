@@ -16,20 +16,20 @@ export async function POST(request) {
     return NextResponse.json({ message: "Cart Updated" });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({error: error.message}, {status: 400});
+    return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }
 
 // Get user cart
-export async function GEt(request) {
+export async function GET(request) {
   try {
     const { userId } = getAuth(request);
     const user = await prisma.user.findUnique({
-        where:{id:userId}
-    })
-    return NextResponse.json({ cart:user.cart });
+      where: { id: userId },
+    });
+    return NextResponse.json({ cart: user.cart });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({error: error.message}, {status: 400});
+    return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }

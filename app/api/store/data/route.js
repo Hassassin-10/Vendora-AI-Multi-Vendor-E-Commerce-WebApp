@@ -1,34 +1,38 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-
 // get store info and products
 
 export async function GET(request) {
-    try {
-        // Get store usersname from query params
-        const { searchParams } = new URL(request.url);
-        const username = searchParams.get("username").toLowerCase();
+  try {
+    // Get store usersname from query params
+    const { searchParams } = new URL(request.url);
+    const username = searchParams.get("username").toLowerCase();
 
-        if (!username) {
-            return NextResponse.json({ error: "missing username" }, { status: 400 });
-        }
-
-        // get store info and inStock products with ratings
-        const store = await prisma.store.findUnique({
-            where: { username,isActive:true },
-            include: {Products: {include: {rating: true}}}
-        })
-
-        if (!store) {
-            return NextResponse.json({ error: "store not found" }, { status: 400 });
-        }
-
-        return NextResponse.json({ store });
-
-    }catch (error) {
-        console.log(error);
-        return NextResponse.json({ error: error.code || error.message }, { status: 400 });
-
+    if (!username) {
+      return NextResponse.json({ error: "missing username" }, { status: 400 });
     }
+
+    // get store info and inStock products with ratings
+    const store = await prisma.store.findUnique({
+      where: { username },
+      include: { Product: { include: { rating: true } } },
+    });
+
+    if (!store) {
+      return NextResponse.json({ error: "store not found" }, { status: 400 });
+    }
+
+    if (!store.isActive) {
+      return NextResponse.json({ error: "store is inactive" }, { status: 400 });
+    }
+
+    return NextResponse.json({ store });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { error: error.code || error.message },
+      { status: 400 }
+    );
+  }
 }
