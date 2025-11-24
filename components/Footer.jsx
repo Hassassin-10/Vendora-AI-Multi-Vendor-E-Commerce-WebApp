@@ -32,9 +32,9 @@ const Footer = () => {
         {
             title: "CONTACT",
             links: [
-                { text: "+1-212-456-7890", path: '/', icon: MailIcon },
-                { text: "contact@example.com", path: '/', icon: PhoneIcon },
-                { text: "794 Francisco, 94102", path: '/', icon: MapPinIcon }
+                { text: "+91 9741090164", path: '/', icon: PhoneIcon },
+                { text: "hassassinsp10@gmail.com", path: '/', icon: MailIcon },
+                { text: "Bangalore - India", path: '/', icon: MapPinIcon }
             ]
         }
     ];
