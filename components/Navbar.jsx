@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useUser, useClerk, UserButton ,Protect} from "@clerk/nextjs";
+import { useUser, useClerk, UserButton, Protect } from "@clerk/nextjs";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -30,11 +30,11 @@ const Navbar = () => {
           >
             <span className="text-green-600">Ven</span>dora
             <span className="text-green-600 text-5xl leading-0">.</span>
-            <Protect plan='plus'>
+            <Protect plan="plus">
               <p className="absolute text-xs font-semibold -top-1 -right-8 px-3 p-0.5 rounded-full flex items-center gap-2 text-white bg-green-500">
-              plus
-            </p>
-            </Protect>         
+                plus
+              </p>
+            </Protect>
           </Link>
 
           {/* Desktop Menu */}
@@ -46,7 +46,7 @@ const Navbar = () => {
 
             <form
               onSubmit={handleSearch}
-              className="hidden xl:flex items-center w-xs text-sm gap-2 bg-slate-100 px-4 py-3 rounded-full"
+              className="hidden md:flex items-center w-xs text-sm gap-2 bg-slate-100 px-4 py-3 rounded-full"
             >
               <Search size={18} className="text-slate-600" />
               <input
@@ -91,28 +91,37 @@ const Navbar = () => {
           </div>
 
           {/* Mobile User Button  */}
-          <div className="sm:hidden">
+          <div className="sm:hidden flex items-center gap-4">
+            <form
+              onSubmit={handleSearch}
+              className="flex items-center text-sm gap-2 bg-slate-100 px-3 py-2 rounded-full"
+            >
+              <Search size={16} className="text-slate-600" />
+              <input
+                className="bg-transparent outline-none placeholder-slate-600 text-sm w-32"
+                type="text"
+                placeholder="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                required
+              />
+            </form>
+
             {user ? (
-              <div>
-                <UserButton>
-                  <UserButton.MenuItems>
-                    <UserButton.Action
-                      labelIcon={<ShoppingCart size={16} />}
-                      label="Cart"
-                      onClick={() => router.push("/cart")}
-                    />
-                  </UserButton.MenuItems>
-                </UserButton>
-                <UserButton>
-                  <UserButton.MenuItems>
-                    <UserButton.Action
-                      labelIcon={<PackageIcon size={16} />}
-                      label="My Orders"
-                      onClick={() => router.push("/orders")}
-                    />
-                  </UserButton.MenuItems>
-                </UserButton>
-              </div>
+              <UserButton>
+                <UserButton.MenuItems>
+                  <UserButton.Action
+                    labelIcon={<ShoppingCart size={16} />}
+                    label="Cart"
+                    onClick={() => router.push("/cart")}
+                  />
+                  <UserButton.Action
+                    labelIcon={<PackageIcon size={16} />}
+                    label="My Orders"
+                    onClick={() => router.push("/orders")}
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
             ) : (
               <button
                 onClick={openSignIn}
