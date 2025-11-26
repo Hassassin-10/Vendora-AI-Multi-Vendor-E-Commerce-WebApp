@@ -9,7 +9,7 @@ export const assets = {
     hero_product_img1, hero_product_img2,
 }
 
-export const categories = ["Smartphones","Laptops","Headphones", "Speakers", "Watch", "Earbuds", "Mouse","Gaming", "Decoration"];
+export const categories = ["Smartphones","Laptops","Headphones", "Speakers", "Watch", "Earbuds", "Mouse","Camera","Gaming","Accessories","Decoration"];
 
 
 export const ourSpecsData = [
