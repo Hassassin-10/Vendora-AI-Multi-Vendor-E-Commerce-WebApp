@@ -20,6 +20,20 @@ const Navbar = () => {
     router.push(`/shop?search=${search}`);
   };
 
+  const handleScroll = (section) => {
+    if (section === "about") {
+      const element = document.getElementById("about-section");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else if (section === "contact") {
+      const element = document.getElementById("contact-section");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <nav className="relative bg-white">
       <div className="mx-6">
@@ -41,8 +55,18 @@ const Navbar = () => {
           <div className="hidden sm:flex items-center gap-4 lg:gap-8 text-slate-600">
             <Link href="/">Home</Link>
             <Link href="/shop">Shop</Link>
-            <Link href="/">About</Link>
-            <Link href="/">Contact</Link>
+            <button
+              onClick={() => handleScroll("about")}
+              className="hover:text-slate-800 transition"
+            >
+              About
+            </button>
+            <button
+              onClick={() => handleScroll("contact")}
+              className="hover:text-slate-800 transition"
+            >
+              Contact
+            </button>
 
             <form
               onSubmit={handleSearch}
