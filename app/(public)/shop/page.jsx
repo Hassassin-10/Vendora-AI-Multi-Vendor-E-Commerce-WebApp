@@ -16,10 +16,11 @@ function ShopContent() {
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch =
-      !search || 
+      !search ||
       product.name.toLowerCase().includes(search.toLowerCase()) ||
       product.category.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = !category || product.category.toLowerCase() === category.toLowerCase();
+    const matchesCategory =
+      !category || product.category.toLowerCase() === category.toLowerCase();
     return matchesSearch && matchesCategory;
   });
 
