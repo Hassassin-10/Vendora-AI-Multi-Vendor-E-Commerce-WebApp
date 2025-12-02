@@ -13,6 +13,7 @@ export default function StoreAddProduct() {
     description: "",
     mrp: 0,
     price: 0,
+    stock: 0,
     category: "",
   });
   const [loading, setLoading] = useState(false);
@@ -82,6 +83,7 @@ export default function StoreAddProduct() {
       formData.append("description", productInfo.description);
       formData.append("mrp", productInfo.mrp);
       formData.append("price", productInfo.price);
+      formData.append("stock", productInfo.stock);
       formData.append("category", productInfo.category);
 
       // Adding images to formdata
@@ -101,6 +103,7 @@ export default function StoreAddProduct() {
         description: "",
         mrp: 0,
         price: 0,
+        stock: 0,
         category: "",
       });
 
@@ -199,6 +202,18 @@ export default function StoreAddProduct() {
             value={productInfo.price}
             placeholder="0"
             rows={5}
+            className="w-full max-w-45 p-2 px-4 outline-none border border-slate-200 rounded resize-none"
+            required
+          />
+        </label>
+        <label htmlFor="" className="flex flex-col gap-2 ">
+          Stock Quantity
+          <input
+            type="number"
+            name="stock"
+            onChange={onChangeHandler}
+            value={productInfo.stock}
+            placeholder="0"
             className="w-full max-w-45 p-2 px-4 outline-none border border-slate-200 rounded resize-none"
             required
           />

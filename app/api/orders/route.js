@@ -110,36 +110,51 @@ export async function POST(request) {
           },
         },
       });
+
+      // Reduce stock for each item
+      for (const item of sellerItems) {
+        await prisma.product.update({
+          where: { id: item.id },
+          data: {
+            stock: {
+              decrement: item.quantity,
+            },
+          },
+        });
+      }
+
       orderIds.push(order.id);
     }
 
-    if(paymentMethod === 'STRIPE'){
-        const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
-        const origin = await request.headers.get('origin')
+    if (paymentMethod === "STRIPE") {
+      const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+      const origin = await request.headers.get("origin");
 
-        const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
-            line_items:[{
-                price_data:{
-                    currency:'inr',
-                    product_data:{
-                        name:'Order'
-                    },
-                    unit_amount: Math.round(fullAmount * 100)
-                },
-                quantity:1
-            }],
-            expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
-            mode:'payment',
-            success_url: `${origin}/loading?nextUrl=orders`,
-            cancel_url: `${origin}/cart`,
-            metadata:{
-                orderIds:orderIds.join(','),
-                userId,
-                appId: 'Vendora'
-            }
-        })
-        return NextResponse.json({session})
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: [
+          {
+            price_data: {
+              currency: "inr",
+              product_data: {
+                name: "Order",
+              },
+              unit_amount: Math.round(fullAmount * 100),
+            },
+            quantity: 1,
+          },
+        ],
+        expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
+        mode: "payment",
+        success_url: `${origin}/loading?nextUrl=orders`,
+        cancel_url: `${origin}/cart`,
+        metadata: {
+          orderIds: orderIds.join(","),
+          userId,
+          appId: "Vendora",
+        },
+      });
+      return NextResponse.json({ session });
     }
 
     // clear the cart
